@@ -26,7 +26,27 @@ To be accessed the objects in a module need to be exported
 
 */
 
-require('./logger') //To load a module
+const logger = require('./logger') //To load a module
 //for a sub folder './subFolder/logger', for a paretn folder '../logger'
 //We can use jshint wich scan our javascript errors and gives back a more understable description
 //In terminal: jshint app.js
+
+
+//path module
+const path = require('path')
+
+let pathObject = path.parse(__filename)
+
+console.log(pathObject)
+
+//Operating System module: to access information about the operating system
+
+const os = require('os');
+
+let totalMemory = os.totalmem()
+let freeMemory = os.freemem()
+
+console.log(totalMemory + ' ' + freeMemory ) //With concatenation
+console.log(`Total Memory: ${totalMemory}`); //With template string
+console.log(`Free Memory: ${freeMemory}`);
+
