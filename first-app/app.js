@@ -89,12 +89,12 @@ logger.log('message')//Remember, when a event raise goes after the listener
 const http = require('http')
 
 const server = http.createServer((req, resp) => {
-    if(req.url === '/'){ //To handle a url
+    if(req.url === '/'){ //To handle a url, a endpoint
         resp.write('Hello world')
         resp.end()
     }
 
-    if(req.url === 'api/courses'){ //As we add more url the complexity raises, so we use Express framework to simplify 
+    if(req.url === 'api/courses'){ //As we add more endpoints the complexity raises, so we use Express framework to simplify 
         resp.write(JSON.stringify([1, 2, 3])) //Using JSON we convert an array of numbers on string
         resp.end()
     }
