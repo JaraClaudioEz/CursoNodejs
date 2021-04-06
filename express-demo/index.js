@@ -31,6 +31,7 @@ app.get('/api/courses/:id', (req, res) => { //id is the name of the parameter, c
     const course = courses.find(c => c.id === parseInt(req.params.id));
     if (!course) { //If the client ask for a resource that is not in the server, by convention we should response with a status code 404
         res.status(404).send('The course with the given ID was not found.');
+        return; //To exit the function
     }
     res.send(course); //Otherwise if the server have the resourse we return the course for the given id
 });
@@ -95,22 +96,33 @@ app.put('/api/courses/:id', (req, res) => {
     //If not existig, return 404
     const course = courses.find(c => c.id === parseInt(req.params.id));
     if (!course) {
-        res.status(404).send('The course with the given ID was not found.');
+        return res.status(404).send('The course with the given ID was not found.'); //Direct return to exit the funciont, short version
     };
 
     //Validate
     //If invalid, return 400
     const { error } = validateCourse(req.body);
-    if (error) {
-        res.status(400).send(error.details[0].message);
-        return;
-    };
+    if (error) return res.status(400).send(error.details[0].message);
 
     //Update course
     course.name = req.body.name; //If we have more properties we set them here
     //Return updated course to the client
     res.send(course);
 
+});
+
+app.delete('/api/courses/:id', (req, res) => {
+    //Look up the course
+    //If not existig, return 404
+    const course = courses.find(c => c.id === parseInt(req.params.id));
+    if (!course) return res.status(404).send('The course with the given ID was not found.'); //Shorter version in one line to exit the function
+
+    //Delete
+    const index = courses.indexOf(course);
+    courses.splice(index, 1); //The 1 stands for remove one object
+
+    //Return the same course
+    res.send(course);
 });
 
 app.listen(port, () => {
