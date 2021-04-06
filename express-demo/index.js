@@ -1,3 +1,4 @@
+const Joi = require('joi');
 const express = require('express');
 const app = express(); //By convenction the object type express is called app
 /* Http methods
@@ -20,7 +21,7 @@ app.get('/', (req, res) => { //Callback function called route handler
 
 app.get('/api/courses', (req, res)=>{
     res.send(courses);
-})
+});
 
 //PORT: it is an enviroment variable, to handle the port asigned in the host who is running our api
 const port = process.env.PORT || 3000; //PORT is the name of the enviroment variable, if that variable is seted it will use it otherwise will use an arbitrary port number, 3000 in thi case
@@ -43,6 +44,26 @@ app.get('api/posts/:year/:month', (req, res)=>{
 */
 
 app.post('/api/courses', (req, res) =>{
+    /*
+    if(!req.body.name || req.body.name.length < 3){ //For larger objects the input validation should be made using joi for example
+        //By convention we has to response with a status code 400: Bad request
+        res.status(400).send('Name is required and should be minimun 3 characters.');
+        return;
+    };
+    */
+    const schema = Joi.object({
+        name: Joi.string().min(3).required()
+    });
+
+    const result = schema.validate(req.body);
+    //const result = Joi.validate(req.body, schema);
+    console.log(result);
+
+    if(result.error){ 
+        res.status(400).send(result.error.details[0].message);
+        return;
+    };
+
     const course = {
         id: courses.length + 1, //When we work with a db the id is asigned by the db
         name: req.body.name //Assuming that in the request body we have an object and that object has a name property
