@@ -11,7 +11,7 @@ readFile('./content/first.txt', 'utf8', (err, result) => {
     //console.log(result);
     const first = resul;
 
-    readFile('./content/second.txt', 'utf8', (err, result) => {
+    readFile('./content/second.txt', 'utf8', (err, result) => { //This way is more messy because we use nested readFile functions, nested callbacks
         if (err) {
             console.log(err);
             return;
