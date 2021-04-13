@@ -1,0 +1,21 @@
+// npm - global command, comes with node
+// npm --version
+
+// local dependency - use it only in this particular project
+// npm i <packagenName>
+
+// global dependency - use it in any project
+// npm install -g <packagenName>
+
+// package.json - manifest file (stores important info about project/package) more details at https://nodesource.com/blog/the-basics-of-package-json-in-node-js-and-npm/
+// manual aproach (crate package.json in the root, create properties, etc)
+// npm init (step by step, press enter to skip)
+// npm init -y (everything default)
+
+// npm i nodemon -D (To install nodemon on devDependencies, to be used while on development of the app but not in production)
+
+// npm uninstall <packagenName> 
+
+// package-lock.json - manifest file (installed automatically, stores specific versions for all the packages, not only dependencies, also the packages that dependencies uses)
+
+// This course resources can be found at course-api.com
