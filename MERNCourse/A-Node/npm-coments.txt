@@ -12,7 +12,7 @@
 // npm init (step by step, press enter to skip)
 // npm init -y (everything default)
 
-// npm i nodemon -D (To install nodemon on devDependencies, to be used while on development of the app but not in production)
+// npm i nodemon -D (To install nodemon on devDependencies, to be used while on app development but not in production)
 
 // npm uninstall <packagenName> 
 
