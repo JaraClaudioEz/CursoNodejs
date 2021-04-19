@@ -1,33 +1,35 @@
 const express = require('express');
 const app = express();
-const morgan = require('morgan')
-const logger = require('./logger')
-const authorize = require('./authorize')
+let { people } = require('./data')
 
-// req => middleware => res
+// static assets
+app.use(express.static('./methods-public'))
 
-// 1. use vs route == all routes or specific route
-// 2. options - our own / express / third party
+// parse form data
+app.use(express.urlencoded({ extended: false })) //To access form data
 
-//app.use([logger, authorize]) our own
-//app.use(express.static('./public')) express middleware
-app.use(morgan('tiny')) // third party
+// parse json
+app.use(express.json())
 
-app.get('/', (req, res) => {
-    res.send('Home')
+app.get('/api/people', (req, res) => {
+    res.status(200).json({ success: true, data: people })
 })
 
-app.get('/about', (req, res) => {
-    res.send('About')
+app.post('/api/people', (req, res) => {
+    const { name } = req.body;
+    if(!name){
+        return res.status(400).json({success: false, msg:'Please provide name value'})
+    }
+    res.status(201).json({success: true, person: name})
 })
 
-app.get('/api/products', (req, res) => {
-    res.send('Products')
-})
+app.post('/login', (req, res) => { //Traditional, from a form with action and method
+    const { name } = req.body;
+    if (name) { //This is merely for example, in real world aplications validations are made in frontend
+        return res.status(200).send(`Welcome ${name}`)
+    }
 
-app.get('/api/items', (req, res) => {
-    console.log(req.user);
-    res.send('Items')
+    res.status(401).send('Please provide credentials')
 })
 
 app.listen(5000, () => {
